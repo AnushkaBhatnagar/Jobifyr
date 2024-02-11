@@ -81,7 +81,7 @@
                     <div class="checkmark" id="checkUppercase">&#x2718; At least 1 uppercase character</div>
                     <div class="checkmark" id="checkSpecial">&#x2718; At least 1 special character</div>
                 </div>
-                  <button type="submit" class="btn head-btn2 ml-2 my-4" id="registerbutton" disabled>REGISTER</button>
+                  <button type="button" class="btn head-btn2 ml-2 my-4" id="registerbutton" disabled>REGISTER</button>
                 </form>
                 <div class="mt-2">
                   Already have an account? <a href="login.html" style="color: #046cb4;">Login</a>
@@ -156,10 +156,15 @@
       $("#registerbutton").prop("disabled", !isFormValid);
     }
 
-    $("#loginForm").submit(function(event) {
-      event.preventDefault(); // Prevent form submission for demonstration purposes
-      alert("Form submitted!"); // Replace with your actual login logic
+    // $("#loginForm").submit(function(event) {
+    //   event.preventDefault(); // Prevent form submission for demonstration purposes
+    //   alert("Form submitted!"); // Replace with your actual login logic
+    // });
+
+    $("#registerbutton").click(function() {
+      window.location.href = "registrationsuccessful.html";
     });
+
     </script>
    </body>
 </html>
