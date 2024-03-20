@@ -6,12 +6,13 @@
          <title>Jobifyr</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="manifest" href="site.webmanifest">
+        <!-- <link rel="manifest" href="site.webmanifest"> -->
 		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
         <script src="https://accounts.google.com/gsi/client" async></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-		<!-- CSS here -->
+
+        <!-- CSS here -->
             <link rel="stylesheet" href="assets/css/bootstrap.min.css">
             <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
             <link rel="stylesheet" href="assets/css/flaticon.css">
@@ -59,30 +60,14 @@
               <div class="text-center mt-4">
                 <img src="assets/img/logo/logo.png" alt="" width="240px" height="64px">
                 <h1 class="m-4">REGISTER</h1>
-                <form>
+                <form id="register1">
                   <div class="form-group">
                     <input type="email" class="form-control" id="email" placeholder="Enter email" required>
                     <div class="invalid-feedback" id="emailError">Please enter a valid email address.</div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <input type="password" class="form-control" id="password" width="50%" placeholder="Enter password" required>
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <i class="fa fa-eye" id="togglePassword"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Checkmarks for password requirements -->
-                <div class="form-group checkmark-container">
-                    <div class="checkmark" id="checkLength">&#x2718; Minimum 8 characters</div>
-                    <div class="checkmark" id="checkNumber">&#x2718; At least 1 number</div>
-                    <div class="checkmark" id="checkUppercase">&#x2718; At least 1 uppercase character</div>
-                    <div class="checkmark" id="checkSpecial">&#x2718; At least 1 special character</div>
-                </div>
-                  <button type="button" class="btn head-btn2 ml-2 my-4" id="registerbutton" disabled>REGISTER</button>
+                  </div>    
+                  <button type="submit" class="btn head-btn2 ml-2 my-4" id="registerbutton" disabled>REGISTER</button>
                 </form>
+                <div id="response"></div>
                 <div class="mt-2">
                   Already have an account? <a href="login.html" style="color: #046cb4;">Login</a>
                 </div>
@@ -94,77 +79,65 @@
       <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script>
-        // Toggle password visibility
-        $("#togglePassword").click(function() {
-        var passwordField = $("#password");
-        var passwordFieldType = passwordField.attr('type');
-        if (passwordFieldType === 'password') {
-            passwordField.attr('type', 'text');
-            $(this).removeClass('fa-eye').addClass('fa-eye-slash');
-        } else {
-            passwordField.attr('type', 'password');
-            $(this).removeClass('fa-eye-slash').addClass('fa-eye');
-        }
-        });
-       // Password validation checkmarks
-    $("#password").on("input", function() {
-      var password = $(this).val();
-      var lengthCheck = password.length >= 8;
-      var numberCheck = /\d/.test(password);
-      var uppercaseCheck = /[A-Z]/.test(password);
-      var specialCheck = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-      $("#checkLength").toggleClass("complete", lengthCheck);
-      $("#checkNumber").toggleClass("complete", numberCheck);
-      $("#checkUppercase").toggleClass("complete", uppercaseCheck);
-      $("#checkSpecial").toggleClass("complete", specialCheck);
-
-      checkFormValidity();
-    });
-
+   <script>
     $("#email").on("input", function() {
-      checkFormValidity();
-    });
+    checkFormValidity();
+  });
 
-    function checkFormValidity() {
-      var email = $("#email").val();
-      var password = $("#password").val();
-      var lengthCheck = password.length >= 8;
-      var numberCheck = /\d/.test(password);
-      var uppercaseCheck = /[A-Z]/.test(password);
-      var specialCheck = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-      var isEmailValid = /\S+@\S+\.\S+/.test(email);
+  function checkFormValidity() {
+    var email = $("#email").val();
+    var isEmailValid = /\S+@\S+\.\S+/.test(email);
 
-      $("#email").removeClass("is-invalid");
-      $("#password").removeClass("is-invalid");
-      $("#emailError").hide();
-      $("#passwordError").hide();
+    $("#email").removeClass("is-invalid");
+    $("#emailError").hide();
 
-      if (!email || !isEmailValid) {
-        $("#email").addClass("is-invalid");
-        $("#emailError").show();
-      }
-
-      if (!password) {
-        $("#password").addClass("is-invalid");
-        $("#passwordError").show();
-      }
-
-      var isFormValid = lengthCheck && numberCheck && uppercaseCheck && specialCheck && isEmailValid;
-
-      $("#registerbutton").prop("disabled", !isFormValid);
+    if (!email || !isEmailValid) {
+      $("#email").addClass("is-invalid");
+      $("#emailError").show();
     }
 
-    // $("#loginForm").submit(function(event) {
-    //   event.preventDefault(); // Prevent form submission for demonstration purposes
-    //   alert("Form submitted!"); // Replace with your actual login logic
-    // });
+    $("#registerbutton").prop("disabled", !isEmailValid);
+  }
+  //API CALL for email only
 
-    $("#registerbutton").click(function() {
-      window.location.href = "registrationsuccessful.html";
+document.getElementById("register1").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting traditionally
+
+    // Get form data
+    var formData = {
+        "email": document.getElementById("email").value
+    };
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify({"email": document.getElementById("email").value  }),
+    redirect: "follow"
+    };
+
+    fetch("https://jobifyr-jyotirjain.koyeb.app/signup/student/check/", requestOptions)
+    .then((response) => {
+    console.log('Status Code:', response.status); // Print status code
+
+    if (response.status === 409) {
+    alert('User with this email already exists'); // Display alert
+    
+    } else if (response.status === 200) {
+    var e=document.getElementById("email").value
+    localStorage.setItem("email_value", e);
+    window.location.href = "/register2.html"; // Redirect to Register2
+    }
+
+    return response.text(); // Continue processing the response
+    })
+    .then((result) => console.log(result))
+    .catch(error => {
+    console.error('Error:', error);
+    document.getElementById("response").innerHTML = "Error submitting data.";
     });
-
-    </script>
+});
+   </script>
    </body>
 </html>
