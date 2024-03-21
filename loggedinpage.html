@@ -51,7 +51,7 @@
                                         alt=""></a>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-md-8">
+                        <div class="col-lg-7 col-md-7">
                             <div class="menu-wrapper" style="margin-left: 100px;">
                                 <!-- Main-menu -->
                                 <div class="main-menu">
@@ -68,6 +68,9 @@
                             </div>
                             </div>
                                 <!-- Header-btn -->
+                                <div class="col-1 text-primary">
+                                    <span id="firstNameContainer"></span>
+                                </div>
                                 <div class="col-lg-1 col-md-1">
                                 <div class="header-btn d-none f-right d-lg-block">
                                     <a href="#" title="Profile"><i class="fa-solid fa-user fa-2xl" style="color: #046cb4;"></i></a>
@@ -506,7 +509,11 @@
         </div>
     </footer>
 
-
+        <script>
+            var f=localStorage.getItem("firstname");
+            console.log(f);
+            firstNameContainer.textContent = f;
+        </script>
 
         <!-- JS here -->
 

@@ -68,6 +68,7 @@
                   <button type="submit" class="btn head-btn2 ml-2 my-4" id="registerbutton" disabled>REGISTER</button>
                 </form>
                 <div id="response"></div>
+                <div id="alert-container" class="alert-container"></div>
                 <div class="mt-2">
                   Already have an account? <a href="login.html" style="color: #046cb4;">Login</a>
                 </div>
@@ -122,7 +123,7 @@
     console.log('Status Code:', response.status); // Print status code
 
     if (response.status === 409) {
-    alert('User with this email already exists'); // Display alert
+    generateBootstrapAlert('User with this email already exists', 'alert-warning');    
     
     } else if (response.status === 200) {
     var e=document.getElementById("email").value
@@ -138,6 +139,27 @@
     document.getElementById("response").innerHTML = "Error submitting data.";
     });
 });
+function generateBootstrapAlert(message, alertType) {
+    // Create the alert element
+    var alertElement = document.createElement('div');
+    alertElement.classList.add('alert', 'alert-dismissible', 'fade', 'show', alertType);
+    alertElement.role = 'alert';
+
+    // Alert message
+    alertElement.innerHTML = `
+        ${message}
+    `;
+
+    // Append the alert to the container
+    document.getElementById('alert-container').appendChild(alertElement);
+    setTimeout(function() {
+        alertElement.classList.remove('show');
+        alertElement.classList.add('hide');
+        setTimeout(function() {
+            alertElement.remove();
+        }, 300); // Fade out duration
+    }, 3000); // Time in milliseconds (3 seconds)
+      }
    </script>
    </body>
 </html>
