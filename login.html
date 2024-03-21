@@ -59,13 +59,13 @@
           <div class="text-center mt-4">
             <img src="assets/img/logo/logo.png" alt="" width="240px" height="64px">
             <h1 class="m-4">LOGIN</h1>
-            <form>
+            <form id="loginform">
               <div class="form-group">
-                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                <input type="email" class="form-control" id="email" placeholder="Enter email" required>
               </div>
               <div class="form-group">
                 <div class="input-group">
-                  <input type="password" class="form-control" id="password" width="50%" placeholder="Enter password">
+                  <input type="password" class="form-control" id="password" width="50%" placeholder="Enter password" required>
                   <div class="input-group-append">
                     <span class="input-group-text">
                       <i class="fa fa-eye" id="togglePassword"></i>
@@ -73,15 +73,9 @@
                   </div>
                 </div>
               </div>
-              <a href="./loggedinpage.html" class="btn head-btn2 ml-2">LOGIN</a>
+              <button type="submit" class="btn head-btn2 ml-2 my-4" id="loginbutton">LOGIN</button>
             </form>
-            <p class="mt-4">OR</p>
-            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID"
-              data-login_uri="https://your.domain/your_login_endpoint" data-auto_prompt="false">
-            </div>
-            <div class="g_id_signin google mb-5" data-type="standard" data-size="large" data-theme="outline"
-              data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
-            </div>
+            <div id="alert-container" class="alert-container"></div>
             <div class="mt-3">
               <a href="#" style="color: #046cb4;">Can't sign in?</a>
             </div>
@@ -109,6 +103,69 @@
         $(this).removeClass('fa-eye-slash').addClass('fa-eye');
       }
     });
+
+    //API CALL for login
+
+    document.getElementById("loginform").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting traditionally
+
+    // Get form data
+    var formData = {
+        "email": document.getElementById("email").value,
+        "password": document.getElementById("password").value
+    };
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify(formData),
+    redirect: "follow"
+    };
+
+    fetch("https://jobifyr-jyotirjain.koyeb.app/login/", requestOptions)
+    .then((response) => {
+    console.log('Status Code:', response.status); // Print status code
+
+    if (response.status === 200) {
+      window.location.href = "/loggedinpage.html";
+      return response.json()
+    } else if(response.status === 404) {
+     generateBootstrapAlert('Incorrect Email or Password', 'alert-warning');    
+    }
+    return response.text() // Continue processing the response
+    })
+    .then((result) => 
+    localStorage.setItem("firstname", result.user_details.first_name))
+    .catch(error => {
+    console.error('Error:', error)
+    document.getElementById("response").innerHTML = "Error submitting data.";
+    });
+});
+
+function generateBootstrapAlert(message, alertType) {
+    // Create the alert element
+    var alertElement = document.createElement('div');
+    alertElement.classList.add('alert', 'alert-dismissible', 'fade', 'show', alertType);
+    alertElement.role = 'alert';
+
+    // Alert message
+    alertElement.innerHTML = `
+        ${message}
+    `;
+
+    // Append the alert to the container
+    document.getElementById('alert-container').appendChild(alertElement);
+    setTimeout(function() {
+        alertElement.classList.remove('show');
+        alertElement.classList.add('hide');
+        setTimeout(function() {
+            alertElement.remove();
+        }, 300); // Fade out duration
+    }, 3000); // Time in milliseconds (3 seconds)
+      }
+
   </script>
 </body>
 
