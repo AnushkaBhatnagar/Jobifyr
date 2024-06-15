@@ -29,7 +29,7 @@ Frontend: HTML, CSS, Bootstrap, JavaScript, Angular, JQuery
 
 Backend: MySQL Database hosted on Amazon RDS
 
-Integration: FastAPI
+Integration: FastAPI, Koyeb
 
 ## Credits
 This project was made by [Dhrumil Burad](https://github.com/Dhrumil313), [Jyotir Jain](https://github.com/jyotirjain), [Anushka Bhatnagar](), [Divya Chadha](https://github.com/DivChadha) and [Ananya Agarwal](https://github.com).
